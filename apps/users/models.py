@@ -1,4 +1,3 @@
-from django.db import models
 from django.db import models  #Django的model
 from django.contrib.auth.models import AbstractUser
 # Create your models here.

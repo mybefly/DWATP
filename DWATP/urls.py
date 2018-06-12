@@ -16,7 +16,16 @@ Including another URLconf
 # from django.contrib import admin
 from django.urls import path,include
 import xadmin
+from rest_framework.routers import DefaultRouter
+from rest_framework.documentation import include_docs_urls
+#=======================
+from apitest.views import ProjectViewset
+#=======================
+router = DefaultRouter()
+router.register('projects',viewset=ProjectViewset,base_name="project_list")
 urlpatterns = [
-    #path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
+    path('docs',include_docs_urls("rest_framework.urls")),
+    path('',include(router.urls))
+
 ]
