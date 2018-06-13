@@ -8,7 +8,15 @@ from .models import *
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-
+    pname = serializers.CharField(max_length=100)
     class Meta:
-        model = ProjectInfo()
+        model = ProjectInfo
         fields = "__all__"
+
+
+    def validate_pname(self, pname):
+          if ProjectInfo.objects.filter(pname=pname):
+              raise serializers.ValidationError("项目名称已存在")
+
+
+
