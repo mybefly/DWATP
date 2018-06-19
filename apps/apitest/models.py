@@ -8,12 +8,12 @@ class ProjectInfo(models.Model):
     '''
     项目信息表,存储项目信息
     '''
-    pname = models.CharField("项目名称",max_length=100,unique=True)
+    pname = models.CharField("项目名称",max_length=100,)
     pdesc = models.CharField('项目描述',max_length=500)
     cuser = models.ForeignKey(User,verbose_name="创建者",null=True,blank=True,on_delete=models.SET_NULL,related_name="cuser")
     update_user = models.ForeignKey(User,verbose_name="更新者",null=True,blank=True,on_delete=models.SET_NULL)
-    add_time = models.DateField("添加时间",default=datetime.now)
-    update_time = models.DateField("更新时间",default=datetime.now)
+    add_time = models.DateField("添加时间",null=True,blank=True)
+    update_time = models.DateField("更新时间",null=True,blank=True)
     class Meta:
         verbose_name = u"项目信息"
         verbose_name_plural = verbose_name
@@ -25,8 +25,8 @@ class Version(models.Model):
     '''
     版本表
     '''
-    version = models.CharField("版本",max_length=30,unique=True)
-    add_time = models.DateField("添加时间",default=datetime.now)
+    version = models.CharField("版本",max_length=30)
+    add_time = models.DateField("添加时间",null=True,blank=True)
     class Meta:
         verbose_name = "版本信息"
         verbose_name_plural = verbose_name
@@ -43,7 +43,7 @@ class ApiInfo(models.Model):
         (2,"update"),
         (3,"disable"),
     )
-    aname = models.CharField('接口名称',max_length=100,unique=True)
+    aname = models.CharField('接口名称',max_length=100)
     apath = models.CharField('接口路径',max_length=50)
     aheaders = models.CharField("接口Headers信息",max_length=100,null=True,blank=True)
     aparams = models.TextField ("参数内容",max_length=5000)
@@ -53,8 +53,8 @@ class ApiInfo(models.Model):
     aversion = models.ForeignKey(Version,verbose_name="接口版本",on_delete=models.SET("1.0.0"))
     cuser = models.ForeignKey(User,verbose_name="创建者",null=True,blank=True,on_delete=models.SET_NULL,related_name="auser")
     pdate_user = models.ForeignKey(User,verbose_name="更新者",null=True,blank=True,on_delete=models.SET_NULL)
-    add_time = models.DateField("添加时间",default=datetime.now)
-    update_time = models.DateField("更新时间",default=datetime.now)
+    add_time = models.DateField("添加时间",null=True,blank=True)
+    update_time = models.DateField("更新时间",null=True,blank=True)
     class Meta:
         verbose_name = "接口信息"
         verbose_name_plural = verbose_name
@@ -68,19 +68,20 @@ class TestCaseInfo(models.Model):
     '''
     TSTAUS=(
         (1,"PASS"),
-        (0,"FAIL")
+        (0,"FAIL"),
+        (2,"STOP")
     )
-    tname = models.CharField("用例名称",max_length=50,unique=True)
+    tname = models.CharField("用例名称",max_length=50)
     tdesc = models.CharField("用例描述",max_length=100,null=True,blank=True)
-    tsteps = models.CharField("用例步骤",max_length=100)
-    tstaus = models.IntegerField("用例状态",choices=TSTAUS)
+    tsteps = models.CharField("用例步骤",max_length=100,null=True,blank=True)
+    tstaus = models.IntegerField("用例状态",choices=TSTAUS,default=2)
     tproject = models.ForeignKey(ProjectInfo,verbose_name="所属项目",on_delete=models.CASCADE)
     tapi = models.ForeignKey(ApiInfo,verbose_name="所属接口",on_delete=models.CASCADE)
     tversion = models.ForeignKey(Version,verbose_name="测试用例版本",on_delete=models.SET("1.0.0"))
     cuser = models.ForeignKey(User,verbose_name="创建者",null=True,blank=True,on_delete=models.SET_NULL,related_name="tuser")
     update_user = models.ForeignKey(User,verbose_name="更新者",null=True,blank=True,on_delete=models.SET_NULL)
-    add_time = models.DateField("添加时间",default=datetime.now)
-    update_time = models.DateField("更新时间",default=datetime.now)
+    add_time = models.DateField("添加时间",null=True,blank=True)
+    update_time = models.DateField("更新时间",null=True,blank=True)
     class Meta:
         verbose_name = "用例信息"
         verbose_name_plural = verbose_name
@@ -91,10 +92,12 @@ class Steps(models.Model):
     '''
     测试步骤
     '''
-    sname = models.CharField("步骤名称",max_length=50,unique=True)
-    spath = models.CharField("接口路径",max_length=50,unique=True)
+    sname = models.CharField("步骤名称",max_length=50)
+    spath = models.CharField("接口路径",max_length=50)
     sdata = models.CharField("接口数据",max_length=50)
     stestcase = models.ForeignKey(TestCaseInfo,verbose_name="所属用例",on_delete=models.CASCADE)
+    add_time = models.DateField("添加时间",null=True,blank=True)
+
     class Meta:
         verbose_name = "测试步骤"
         verbose_name_plural = verbose_name
