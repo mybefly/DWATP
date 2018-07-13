@@ -32,7 +32,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 #接口信息Serializer
 class ApiSerializer(serializers.ModelSerializer):
     aname = serializers.CharField(max_length=100,validators=[UniqueValidator(queryset=ApiInfo.objects.all(),message="接口名称已存在"),])
-    apath = serializers.CharField(max_length=50,validators=[UniqueValidator(queryset=ApiInfo.objects.all(),message="接口路径已存在"),])
+    apath = serializers.CharField(max_length=50)
     add_time=serializers.DateField(allow_null=True)
     update_time = serializers.DateField(allow_null=True)
     cuser = UserSerializer(read_only=True)

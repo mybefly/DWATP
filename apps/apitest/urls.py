@@ -15,20 +15,13 @@ Including another URLconf
 """
 # from django.contrib import admin
 from django.urls import path,include
-import xadmin
 from rest_framework.routers import DefaultRouter
 from rest_framework.documentation import include_docs_urls
-from apitest.views import ProjectViewset,VersionViewSet
-from rest_framework.routers import DefaultRouter
+from .views import *
 router = DefaultRouter()
-router.register("projects",viewset=ProjectViewset,base_name="project_list")
-router.register("verisons",viewset=VersionViewSet,base_name="verison_list")
+router.register('apis',viewset=ApiViewSet,base_name="api_list")
+router.register('testcases',viewset=TestCaseViewSet,base_name="testcase_list")
+router.register('steps',viewset=StepsViewSet,base_name="steps_list")
 urlpatterns = [
-    #xadmin和Restframework文档链接
-    path('xadmin/', xadmin.site.urls),
-    path('docs',include_docs_urls(title="自动化测试",public=False)),
-    #全局url
-    path('',include(router.urls)),
-    #apitest应用url
-    path('apitest/',include("apitest.urls"))
+    path('',include(router.urls))
 ]
