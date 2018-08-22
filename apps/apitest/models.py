@@ -1,11 +1,7 @@
 from django.db import models
 from datetime import datetime #引入时间
-from django.contrib.auth import get_user_model
-User = get_user_model()
-
+from users.models import User
 # Create your models here.
-# class User(models.Model):
-#       name = models.CharField("用户名")
 
 class ProjectInfo(models.Model):
     '''
@@ -16,7 +12,7 @@ class ProjectInfo(models.Model):
     cuser = models.ForeignKey(User,verbose_name="创建者",null=True,blank=True,on_delete=models.SET_NULL,related_name="cuser")
     update_user = models.ForeignKey(User,verbose_name="更新者",null=True,blank=True,on_delete=models.SET_NULL)
     add_time = models.DateField("添加时间",auto_created=True,null=True,blank=True)
-    update_time = models.DateField("更新时间",auto_created=True,null=True,blank=True)
+    update_time = models.DateField("更新时间",auto_created =True,null=True,blank=True)
     class Meta:
         verbose_name = u"项目信息"
         verbose_name_plural = verbose_name
@@ -43,8 +39,8 @@ class ApiInfo(models.Model):
     STAUS=(
         (1,"create"),
         (2,"enable"),
-        (2,"update"),
-        (3,"disable"),
+        (3,"update"),
+        (4,"disable"),
     )
     METHODS = (
         (1,"GET"),
@@ -68,7 +64,6 @@ class ApiInfo(models.Model):
         verbose_name_plural = verbose_name
     def __str__(self):
         return self.aname
-
 
 class TestCaseInfo(models.Model):
     '''

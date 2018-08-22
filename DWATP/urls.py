@@ -28,7 +28,7 @@ urlpatterns = [
     path('xadmin/', xadmin.site.urls),
     path('docs',include_docs_urls(title="自动化测试",public=False)),
     #全局url
-    path('',include(router.urls)),
+    path('api/v1/',include(router.urls)),
     #apitest应用url
-    path('apitest/',include("apitest.urls"))
+    path('api/v1/apitest/',include("apitest.urls"))
 ]

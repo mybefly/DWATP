@@ -31,8 +31,6 @@ def cmp(src_data,dst_data):
             print("%s:%s != %s:%s"%(thiskey,src_data,thiskey,dst_data))
 
 
-
-
 conn = sqlite3.connect("./db.sqlite3")
 cu = conn.cursor()
 def access_token():

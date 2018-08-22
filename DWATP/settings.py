@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     #应用App
     'users',
     'apitest',
+    'sqlmaptools',
     #其他第三方App
     'extra_app.xadmin',
     'crispy_forms',
@@ -132,5 +133,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#用户验证模型配置
-AUTH_USER_MODEL = 'users.UserProfile'
